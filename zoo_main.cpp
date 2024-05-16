@@ -3,7 +3,7 @@
 #include "zoo.h"
 
 int Zoo::count = 0;
-
+int Zoo::count_mammals = 0;
 int main()
 {
 	
@@ -39,6 +39,8 @@ int main()
 	first.er(Barsic.id_get());
 
 	Zoo::get_count();
+	Zoo::get_mammal();
 	first.list();
+	
 
 }

@@ -6,22 +6,36 @@
 class Zoo
 {
 private:
+	int id = 0;
 	static int count;
 	std::vector<animal*> animals;
-	
+	static int count_mammals;
 public:
 	Zoo()
 	{}
 	void add(animal* a)
 	{	
+		Mammal* m{ dynamic_cast<Mammal*>(a) };
+		if (m != nullptr)
+			++count_mammals;
 		++count;
 		animals.push_back(a);
-		a->id_set(count - 1);
+		a->id_set(id);
+		++id;
 	}
 	void er(int id) 
 	{
+		for (int i = 0; i < count; ++i)
+		{
+			if (animals[i]->id_get() == id)
+			{
+				Mammal* m{ dynamic_cast<Mammal*>(animals[i]) };
+				if (m != nullptr)
+					--count_mammals;
+				animals.erase(animals.begin() + i);
+			}
+		}
 		--count;
-		animals.erase(animals.begin()+id);
 	}
 	void listen() const
 	{
@@ -33,6 +47,10 @@ public:
 	static void get_count() 
 	{
 		std::cout << count << std::endl;
+	}
+	static void get_mammal()
+	{
+		std::cout << count_mammals << std::endl;
 	}
 	void list()
 	{
